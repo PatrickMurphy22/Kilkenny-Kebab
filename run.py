@@ -99,6 +99,7 @@ def view_basket():
         print(f"Item.{index} - {item} : €{price}")
     print(f"Total Value: €{total_basket_value}")
     order_or_continue()
+    return total_basket_value
 
 
 def order_or_continue():
@@ -120,23 +121,53 @@ def order_or_continue():
         print("Thats an invalid input, please enter: Yes or No")
     return False
 
-def collection_or_delivery():
+
+def collection_or_delivery(total_value):
     """
     This function lets the user select wether they would like
     to collect their order or have the food delivered.
     """
-    print("Do yo want your order for Collection or Delivery?")
+    print("\nDo yo want your order for Collection or Delivery?")
     print("Enter D for delivery or C for collection.")
     print("Delivery cost's €3.5 extra.")
-    order_method = input("Enter: ")
-    while True: 
+    while True:
+        order_method = input("Enter: ")
         if order_method.lower() == "d":
-            # food_for_delivery()
+            food_for_delivery(total_value)
             break
         if order_method.lower() == "c":
-            # food_for_collection()
+            print("Thank you for ordering from us.")
+            print(f"Your total order cost = {total_value} ")
+            print("Your food will be ready for collection at approx.")
+            print("Collection Time: ")
             break
         print("Thats an invalid input please enter 'D' or 'C'.")
+    return False
+
+def food_for_collection()
+
+
+def food_for_delivery(total_value):
+    """
+    This function asks the user for their Eirode twice
+    to verify if they entered it correctly, then adds €3.5
+    to the total cost of the delivery fee
+    and gives estimated time of delivery.
+    """
+    print("\nYou are nearly there.")
+    print("Please enter your Eircode below")
+
+    while True:
+        eir_code = input("Eircode: ")
+        confirm_eir_code = input("Please confirm Eircode: ")
+        if eir_code == confirm_eir_code:
+            print("Thank you very much for ordering from us.")
+            print(f"Your total order cost = {total_value + 3.5} ")
+            print("Your estimated time of delivery will be.")
+            print("Delivery Time: ")
+            break
+        print("Your Eircode's didnt match.")
+        print("Please try again..\n")
     return False
 
 
@@ -144,8 +175,8 @@ def menu():
 
     home_screen()
     menu_selection()
-    view_basket()
-    collection_or_delivery()
+    total_value = view_basket()
+    collection_or_delivery(total_value)
 
 
 menu()
