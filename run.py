@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -11,6 +12,13 @@ CREDS = Credentials.from_service_account_file("creds.json")
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("kilkenny_kebab")
+
+
+def time():
+
+    now = datetime.now()
+    current_time = now - timedelta(microseconds=now.microsecond)
+    return current_time
 
 
 def home_screen():
@@ -94,9 +102,11 @@ def view_basket():
     total_basket_value = sum(basket_float_price)
     index = 0
     print("\n---- Your Basket ----\n ")
+
     for item, price in zip(basket_items, basket_float_price):
         index += 1
         print(f"Item.{index} - {item} : €{price}")
+
     print(f"Total Value: €{total_basket_value}")
     order_or_continue()
     return total_basket_value
@@ -119,10 +129,11 @@ def order_or_continue():
         if yes_no.lower() == "no":
             break
         print("Thats an invalid input, please enter: Yes or No")
+
     return False
 
 
-def collection_or_delivery(total_value):
+def collection_or_delivery(total_value, current_time):
     """
     This function lets the user select wether they would like
     to collect their order or have the food delivered.
@@ -130,53 +141,66 @@ def collection_or_delivery(total_value):
     print("\nDo yo want your order for Collection or Delivery?")
     print("Enter D for delivery or C for collection.")
     print("Delivery cost's €3.5 extra.")
+    
     while True:
         order_method = input("Enter: ")
         if order_method.lower() == "d":
-            food_for_delivery(total_value)
+            food_for_delivery(total_value, current_time)
             break
         if order_method.lower() == "c":
-            print("Thank you for ordering from us.")
-            print(f"Your total order cost = {total_value} ")
-            print("Your food will be ready for collection at approx.")
-            print("Collection Time: ")
+            
             break
         print("Thats an invalid input please enter 'D' or 'C'.")
+
     return False
 
-def food_for_collection()
+
+def food_for_collection(total_value, current_time):
+    """
+    Tells user when food will be ready for collection
+    and gives total basket value.
+    """
+    collection_time = current_time + timedelta(minutes=20)
+    
+    print("Thank you for ordering from us.")
+    print(f"Your total order cost = {total_value} ")
+    print("Your food will be ready for collection at approx.")
+    print(f"Collection Time: {collection_time} ")
 
 
-def food_for_delivery(total_value):
+def food_for_delivery(total_value, current_time):
     """
     This function asks the user for their Eirode twice
     to verify if they entered it correctly, then adds €3.5
     to the total cost of the delivery fee
     and gives estimated time of delivery.
     """
+    delivery_time = current_time + timedelta(minutes=40)
+    delivery_fee = total_value + 3.50
+
     print("\nYou are nearly there.")
+    print(f"Total Delivery fee: €{delivery_fee}")
     print("Please enter your Eircode below")
 
     while True:
         eir_code = input("Eircode: ")
-        confirm_eir_code = input("Please confirm Eircode: ")
+        confirm_eir_code = input("Confirm Eircode: ")
         if eir_code == confirm_eir_code:
-            print("Thank you very much for ordering from us.")
-            print(f"Your total order cost = {total_value + 3.5} ")
-            print("Your estimated time of delivery will be.")
-            print("Delivery Time: ")
+            print(f"\nYour food will be delivered to Eircode: {eir_code}")
+            print(f"at approx: {delivery_time}")
             break
-        print("Your Eircode's didnt match.")
+        print("Eircode's didnt match.")
         print("Please try again..\n")
     return False
 
 
 def menu():
 
+    current_time = time()
     home_screen()
     menu_selection()
     total_value = view_basket()
-    collection_or_delivery(total_value)
+    collection_or_delivery(total_value, current_time)
 
 
 menu()
