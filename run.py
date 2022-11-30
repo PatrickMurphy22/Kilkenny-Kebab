@@ -54,6 +54,7 @@ def display_selected_menu(menu_choice):
     menu_prices = SHEET.worksheet(menu_choice).row_values(2)
     index = 0
     menu_list = []
+
     print(f"---- {menu_choice.capitalize()} ----\n")
     for item, price in zip(menu_items, menu_prices):
         index += 1
@@ -70,35 +71,72 @@ def select_menu_items(menu_list):
     """
     users_basket = SHEET.worksheet("basket")
     user_pick = int(input("Item Number: "))
+
     for index, item, price in menu_list:
         if user_pick == index:
             users_basket.update_cell(1, 1, item)
             users_basket.update_cell(2, 1, price)
             print(f"You selected Item Number: {index}\n")
             print(f"Adding {item} to basket......")
-            
-    order_more_or_continue()
+
+    order_or_continue()
 
 
-def order_more_or_continue():
+def view_basket():
+    """
+    This function lets the user see what items
+    are in their basket and the total value
+    of the items.
+    """
+    basket_items = SHEET.worksheet("basket").row_values(1)
+    basket_prices = SHEET.worksheet("basket").row_values(2)
+    basket_float_price = [float(price) for price in basket_prices]
+    total_basket_value = sum(basket_float_price)
+    index = 0
+    print("\n---- Your Basket ----\n ")
+    for item, price in zip(basket_items, basket_float_price):
+        index += 1
+        print(f"Item.{index} - {item} : €{price}")
+    print(f"Total Value: €{total_basket_value}")
+    order_or_continue()
+
+
+def order_or_continue():
     """
     This function asks the user wether they would like
-    to add more items to their basket or they would 
-    like to view their basket.
+    to add more items to their basket or continue to
+    the next step of the proccess.
     """
     print("\nWould you like to order more items?")
     print("Enter Yes to order more or No to view basket.")
+
     while True:
         yes_no = input("Enter: ")
         if yes_no.lower() == "yes":
-            print("\n")
             menu_selection()
             break
         if yes_no.lower() == "no":
-            print("\n")
-            # view_basket()
             break
         print("Thats an invalid input, please enter: Yes or No")
+    return False
+
+def collection_or_delivery():
+    """
+    This function lets the user select wether they would like
+    to collect their order or have the food delivered.
+    """
+    print("Do yo want your order for Collection or Delivery?")
+    print("Enter D for delivery or C for collection.")
+    print("Delivery cost's €3.5 extra.")
+    order_method = input("Enter: ")
+    while True: 
+        if order_method.lower() == "d":
+            # food_for_delivery()
+            break
+        if order_method.lower() == "c":
+            # food_for_collection()
+            break
+        print("Thats an invalid input please enter 'D' or 'C'.")
     return False
 
 
@@ -106,6 +144,8 @@ def menu():
 
     home_screen()
     menu_selection()
+    view_basket()
+    collection_or_delivery()
 
 
 menu()
