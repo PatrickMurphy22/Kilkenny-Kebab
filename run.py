@@ -27,42 +27,85 @@ def home_screen():
 def menu_selection():
     """
     This function will allow users to select either the menu
-    they wish to view, or their current basket.
+    they wish to view.
     """
-    print("Menu options: - Food - Sides - Drinks - Basket -")
+    print("Menu options: - Food - Sides - Drinks -")
     while True:
-        users_choice = input("Enter: ")
-        if users_choice.lower() in ("food", "drinks", "sides", "basket"):
-            print(f"You have selected {users_choice.capitalize()}.\n")
-            print(f"Loading {users_choice.capitalize()} menu.....\n")
+
+        menu_choice = input("Enter: ")
+
+        if menu_choice.lower() in ("food", "drinks", "sides"):
+
+            print(f"You have selected {menu_choice.capitalize()}.\n")
+            print(f"Loading {menu_choice.capitalize()} menu.....\n")
+            display_selected_menu(menu_choice)
             break
+
         print("\nInvalid menu option. Please enter valid menu name.")
-        print("i.e - Food - Sides - Drinks - Basket - \n")
-    return users_choice.lower()
+        print("i.e - Food - Sides - Drinks - \n")
 
 
-def selected_menu(menu_choice):
+def display_selected_menu(menu_choice):
     """
     This function takes the input from the user in menu_selection
     and displays the menu the user has selected.
     """
     menu_items = SHEET.worksheet(menu_choice).row_values(1)
     menu_prices = SHEET.worksheet(menu_choice).row_values(2)
-    index = 1
+    index = 0
     menu_list = []
-    print(f"Menu: - {menu_choice.capitalize()} -\n")
+    print(f"---- {menu_choice.capitalize()} ----\n")
     for item, price in zip(menu_items, menu_prices):
-        print(f"Item.{index} - {item} : €{price}")
         index += 1
+        print(f"Item.{index} - {item} : €{price}")
         menu_list.append([index, item, price])
-    print(menu_list)
-    return menu_list
+    print("\nEnter the item No. you wish to place into basket.")
+    select_menu_items(menu_list)
+
+
+def select_menu_items(menu_list):
+    """
+    This function allows the user to select an item
+    from the menu_list and update it to the basket worksheet.
+    """
+    users_basket = SHEET.worksheet("basket")
+    user_pick = int(input("Item Number: "))
+    for index, item, price in menu_list:
+        if user_pick == index:
+            users_basket.update_cell(1, 1, item)
+            users_basket.update_cell(2, 1, price)
+            print(f"You selected Item Number: {index}\n")
+            print(f"Adding {item} to basket......")
+            
+    order_more_or_continue()
+
+
+def order_more_or_continue():
+    """
+    This function asks the user wether they would like
+    to add more items to their basket or they would 
+    like to view their basket.
+    """
+    print("\nWould you like to order more items?")
+    print("Enter Yes to order more or No to view basket.")
+    while True:
+        yes_no = input("Enter: ")
+        if yes_no.lower() == "yes":
+            print("\n")
+            menu_selection()
+            break
+        if yes_no.lower() == "no":
+            print("\n")
+            # view_basket()
+            break
+        print("Thats an invalid input, please enter: Yes or No")
+    return False
 
 
 def menu():
+
     home_screen()
-    menu_choice = menu_selection()
-    selected_menu(menu_choice)
+    menu_selection()
 
 
 menu()
