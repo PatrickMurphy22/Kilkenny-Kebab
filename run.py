@@ -101,7 +101,7 @@ def calculate_total_basket_value():
     This function calculates the total value of the users basket.
     """
     basket_prices = SHEET.worksheet("basket").row_values(2)
-    basket_float_price = [float(price) for price in basket_prices]
+    basket_float_price = [float(price) for price in basket_prices] 
     total_basket_value = sum(basket_float_price)
     return total_basket_value
 
@@ -112,11 +112,13 @@ def basket():
     """
     basket_items = SHEET.worksheet("basket").row_values(1)
     basket_prices = SHEET.worksheet("basket").row_values(2)
-    print("\n---- Your Basket ----\n ")
     index = 0
+    basket_case = []
     for item, price in zip(basket_items, basket_prices):
         index += 1
         print(f"Item.{index} - {item} : €{price}")
+        basket_case.append([index, item, price])
+    return basket_case
 
 
 def view_basket(col, users_basket):
@@ -126,6 +128,7 @@ def view_basket(col, users_basket):
     of the items.
     """
     calculate_total_basket_value()
+    print("\n---- Your Basket ----\n ")
     basket()
     print(f"Total Value: €{calculate_total_basket_value()}")
     alter_basket(col, users_basket)
@@ -139,8 +142,8 @@ def alter_basket(col, users_basket):
     """
 
     print("\nWould you like to make any changes to your basket??\n")
-    print("Enter Add to add more items, or Rem to remove items.")
-    print("If neither please Enter Out to continue to checkout.\n")
+    print("Enter 'Add' to add more items, or 'Rem' to remove items.")
+    print("If neither please Enter 'Out' to continue to checkout.\n")
 
     while True:
         users_choice = input("Enter: ")
@@ -162,14 +165,16 @@ def remove_basket_items(col, users_basket):
     would like to remove from their basket.
     """
     print("\nPlease enter the item num you want to remove.")
+    print("\n---- Your Basket ----\n ")
     basket()
     remove_item = int(input("\nRemove Item Number: "))
     for num in range(col):
         if remove_item == num:
-            users_basket.update_cell(1, num, "")
-            users_basket.update_cell(2, num, "")
-            
+            # users_basket.update_cell(1, num, "")
+            # users_basket.update_cell(2, num, "0")
+            users_basket.delete_columns(num)
     print(f"\nitem Number {remove_item} has been removed from your basket.")
+    view_basket(col, users_basket)
 
 
 def collection_or_delivery(total_value, current_time):
