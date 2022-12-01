@@ -93,38 +93,45 @@ def add_items_to_basket(menu_list, col):
             print(f"You selected Item Number: {index}\n")
             print(f"Adding {item} to basket......")
             col += 1
-    view_basket(col)
+    view_basket(col, users_basket)
 
 
 def calculate_total_basket_value():
-    
+    """
+    This function calculates the total value of the users basket.
+    """
     basket_prices = SHEET.worksheet("basket").row_values(2)
     basket_float_price = [float(price) for price in basket_prices]
     total_basket_value = sum(basket_float_price)
     return total_basket_value
 
 
-def view_basket(col):
+def basket():
+    """
+    This function holds the contents of the users basket.
+    """
+    basket_items = SHEET.worksheet("basket").row_values(1)
+    basket_prices = SHEET.worksheet("basket").row_values(2)
+    print("\n---- Your Basket ----\n ")
+    index = 0
+    for item, price in zip(basket_items, basket_prices):
+        index += 1
+        print(f"Item.{index} - {item} : €{price}")
+
+
+def view_basket(col, users_basket):
     """
     This function lets the user see what items
     are in their basket and the total value
     of the items.
     """
-    basket_items = SHEET.worksheet("basket").row_values(1)
-    basket_prices = SHEET.worksheet("basket").row_values(2)
     calculate_total_basket_value()
-    index = 0
-    print("\n---- Your Basket ----\n ")
-
-    for item, price in zip(basket_items, basket_prices):
-        index += 1
-        print(f"Item.{index} - {item} : €{price}")
-
+    basket()
     print(f"Total Value: €{calculate_total_basket_value()}")
-    alter_basket(col)
+    alter_basket(col, users_basket)
 
 
-def alter_basket(col):
+def alter_basket(col, users_basket):
     """
     This function lets the user remove items
     from their basket and asks the user if they
@@ -138,14 +145,31 @@ def alter_basket(col):
     while True:
         users_choice = input("Enter: ")
         if users_choice.lower() == "add":
+            print("")
             menu_selection(col)
             break
         if users_choice.lower() == "rem":
-            # remove_basket_items(col)
+            remove_basket_items(col, users_basket)
             break
         if users_choice.lower() == "out":
             break
     return False
+
+
+def remove_basket_items(col, users_basket):
+    """
+    This function lets the user select what item they
+    would like to remove from their basket.
+    """
+    print("\nPlease enter the item num you want to remove.")
+    basket()
+    remove_item = int(input("\nRemove Item Number: "))
+    for num in range(col):
+        if remove_item == num:
+            users_basket.update_cell(1, num, "")
+            users_basket.update_cell(2, num, "")
+            
+    print(f"\nitem Number {remove_item} has been removed from your basket.")
 
 
 def collection_or_delivery(total_value, current_time):
@@ -194,7 +218,6 @@ def food_for_delivery(total_value, current_time):
     delivery_fee = total_value + 3.50
 
     print("\nYou are nearly there.")
-    print(f"Total price: €{delivery_fee}")
     print("Please enter your Eircode below")
 
     while True:
@@ -202,6 +225,7 @@ def food_for_delivery(total_value, current_time):
         confirm_eir_code = input("Confirm Eircode: ")
         if eir_code == confirm_eir_code:
             print(f"\nYour food will be delivered to Eircode: {eir_code}")
+            print(f"Total price: €{delivery_fee}\n")
             print(f"Esitmated Delivery Time: {delivery_time}")
             break
         print("Eircode's didnt match.")
@@ -216,5 +240,6 @@ def menu():
     menu_selection(col)
     total_value = calculate_total_basket_value()
     collection_or_delivery(total_value, current_time)
+
 
 menu()
