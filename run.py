@@ -29,7 +29,7 @@ def home_screen():
     """
     col = 1
     print("Welcome to Kilkenny Kebab.")
-    print("We were voted Ireland's No.1 Kebab shop in 2022. ")
+    print("We were voted Ireland's No.1 Kebab shop in 2022.")
     print("To view our menu's please enter the menu's name below.\n")
     return col
 
@@ -39,39 +39,44 @@ def menu_selection(col):
     This function will allow users to select either the menu
     they wish to view.
     """
+    print("      Menu Options")
+    options = "- Food - Sides - Drinks -"
+    print(options)
 
-    print("Menu options: - Food - Sides - Drinks -")
     while True:
-
+        print("function 1")
         menu_choice = input("Enter: ")
+        selected_menu = menu_choice.lower()
 
-        if menu_choice.lower() in ("food", "drinks", "sides"):
-
-            print(f"You have selected {menu_choice.capitalize()}.\n")
-            print(f"Loading {menu_choice.capitalize()} menu.....\n")
-            display_selected_menu(menu_choice, col)
+        if selected_menu in ("food", "drinks", "sides"):
+            print(f"You have selected {selected_menu.capitalize()}.\n")
+            display_selected_menu(selected_menu, col)
             break
 
-        print("\nInvalid menu option. Please enter valid menu name.")
-        print("i.e - Food - Sides - Drinks - \n")
+        print(f"\n{selected_menu} is not an option.")
+        print(f"Please select from {options}")
+
     return False
 
 
-def display_selected_menu(menu_choice, col):
+def display_selected_menu(selected_menu, col):
     """
     This function takes the input from the user in menu_selection
     and displays the menu the user has selected.
     """
+    print(f"Loading {selected_menu.capitalize()} menu.....\n")
 
-    menu_items = SHEET.worksheet(menu_choice).row_values(1)
-    menu_prices = SHEET.worksheet(menu_choice).row_values(2)
+    menu_items = SHEET.worksheet(selected_menu).row_values(1)
+    menu_prices = SHEET.worksheet(selected_menu).row_values(2)
     index = 0
     menu_list = []
-    print(f"---- {menu_choice.capitalize()} ----\n")
+    print(f"---- {selected_menu.capitalize()} Menu ----\n")
+
     for item, price in zip(menu_items, menu_prices):
         index += 1
         print(f"Item.{index} - {item} : €{price}")
         menu_list.append([index, item, price])
+
     print("\nEnter the item No. you wish to place into basket.")
     add_items_to_basket(menu_list, col)
 
@@ -82,18 +87,51 @@ def add_items_to_basket(menu_list, col):
     from the menu_list and update it to the basket worksheet.
     """
     users_basket = SHEET.worksheet("basket")
-    user_pick = int(input("Item Number: "))
 
-    for index, item, price in menu_list:
-        if user_pick == index:
-            row = 1
-            users_basket.update_cell(row, col, item)
-            row += 1
-            users_basket.update_cell(row, col, price)
-            print(f"You selected Item Number: {index}\n")
-            print(f"Adding {item} to basket......")
-            col += 1
-    view_basket(col, users_basket)
+    while True:
+        try:
+            print("function 2")
+            user_pick = int(input("Item Number: "))
+            for index, item, price in menu_list:
+
+                if user_pick == index:
+                    row = 1
+                    users_basket.update_cell(row, col, item)
+                    row += 1
+                    users_basket.update_cell(row, col, price)
+                    print(f"You selected Item {index} : {item} €{price}")
+                    print("Adding to basket......\n")
+                    col += 1
+                    view_basket_or_order_more(col, users_basket)
+                    break
+
+        except ValueError:
+            print("That is an invalid input.")
+    return False
+
+
+def view_basket_or_order_more(col, users_basket):
+
+    opt_1 = "To order more items, enter the menu's name."
+    opt_2 = "To view your basket and continue enter 'View'."
+    print(opt_1)
+    print(opt_2)
+
+    while True:
+
+        print("function 3")
+        choice = input("Enter: ")
+        user_choice = choice.lower()
+
+        if user_choice in ("food", "sides", "drinks"):
+            display_selected_menu(choice, col)
+            return False
+        if user_choice == "view":
+            view_basket(col, users_basket)
+            return False
+
+        print("\nInvalid input")
+    return False
 
 
 def calculate_total_basket_value():
@@ -101,7 +139,7 @@ def calculate_total_basket_value():
     This function calculates the total value of the users basket.
     """
     basket_prices = SHEET.worksheet("basket").row_values(2)
-    basket_float_price = [float(price) for price in basket_prices] 
+    basket_float_price = [float(price) for price in basket_prices]
     total_basket_value = sum(basket_float_price)
     return total_basket_value
 
@@ -113,12 +151,9 @@ def basket():
     basket_items = SHEET.worksheet("basket").row_values(1)
     basket_prices = SHEET.worksheet("basket").row_values(2)
     index = 0
-    basket_case = []
     for item, price in zip(basket_items, basket_prices):
         index += 1
         print(f"Item.{index} - {item} : €{price}")
-        basket_case.append([index, item, price])
-    return basket_case
 
 
 def view_basket(col, users_basket):
@@ -128,9 +163,9 @@ def view_basket(col, users_basket):
     of the items.
     """
     calculate_total_basket_value()
-    print("\n---- Your Basket ----\n ")
+    print("\n---- Your Basket ---- ")
     basket()
-    print(f"Total Value: €{calculate_total_basket_value()}")
+    print(f"\nTotal Value: €{calculate_total_basket_value()}")
     alter_basket(col, users_basket)
 
 
@@ -140,12 +175,12 @@ def alter_basket(col, users_basket):
     from their basket and asks the user if they
     would like to add more items.
     """
-
     print("\nWould you like to make any changes to your basket??\n")
     print("Enter 'Add' to add more items, or 'Rem' to remove items.")
     print("If neither please Enter 'Out' to continue to checkout.\n")
 
     while True:
+        print("function 4")
         users_choice = input("Enter: ")
         if users_choice.lower() == "add":
             print("")
@@ -156,6 +191,7 @@ def alter_basket(col, users_basket):
             break
         if users_choice.lower() == "out":
             break
+        print("Invalid input, please enter 'add', 'rem', or 'out'.")
     return False
 
 
@@ -165,23 +201,38 @@ def remove_basket_items(col, users_basket):
     would like to remove from their basket.
     """
     print("\nPlease enter the item num you want to remove.")
-    print("\n---- Your Basket ----\n ")
-    basket()
-    remove_item = int(input("\nRemove Item Number: "))
-    for num in range(col):
-        if remove_item == num:
-            # users_basket.update_cell(1, num, "")
-            # users_basket.update_cell(2, num, "0")
-            users_basket.delete_columns(num)
-    print(f"\nitem Number {remove_item} has been removed from your basket.")
-    view_basket(col, users_basket)
+
+    while True:
+        try:
+            print("function 5")
+            remove_item = int(input("\nRemove Item Number: "))
+
+            for num in range(col):
+                if remove_item == num:
+                    users_basket.delete_columns(num)
+                    print(f"\nRemoving Item No. {remove_item}.")
+                    print(f"Item Number: {remove_item} has been removed...")
+                    users_basket.add_cols(1)
+                    col -= 1
+                    view_basket(col, users_basket)
+                    break
+
+        except ValueError:
+            print("That is an invalid input.")
+            print("That is not a number.")
+    return False
 
 
-def collection_or_delivery(total_value, current_time):
+def collection_or_delivery(total_value, current_time, col):
     """
     This function lets the user select wether they would like
     to collect their order or have the food delivered.
     """
+    if total_value == 0:
+        print("Sorry it seems like your basket is empty")
+        print("We are redirecting you to our menu's")
+        menu_selection(col)
+
     print("\nDo yo want your order for Collection or Delivery?")
     print("Enter D for delivery or C for collection.")
     print("Delivery cost's €3.5 extra.")
@@ -226,13 +277,16 @@ def food_for_delivery(total_value, current_time):
     print("Please enter your Eircode below")
 
     while True:
+
         eir_code = input("Eircode: ")
         confirm_eir_code = input("Confirm Eircode: ")
+
         if eir_code == confirm_eir_code:
             print(f"\nYour food will be delivered to Eircode: {eir_code}")
             print(f"Total price: €{delivery_fee}\n")
             print(f"Esitmated Delivery Time: {delivery_time}")
             break
+
         print("Eircode's didnt match.")
         print("Please try again..\n")
     return False
@@ -244,7 +298,8 @@ def menu():
     col = home_screen()
     menu_selection(col)
     total_value = calculate_total_basket_value()
-    collection_or_delivery(total_value, current_time)
+    collection_or_delivery(total_value, current_time, col)
+    SHEET.worksheet("basket").clear()
 
 
 menu()
