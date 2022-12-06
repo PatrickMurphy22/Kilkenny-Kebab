@@ -298,6 +298,12 @@ def useless_programer(order_method_lower):
 
 
 def basket_value_under_15(total_value, col, current_time):
+    """
+    This function compares the users basket to the value 15.
+    If basket is over 15 user may proceed to checkout for delivery.
+    IF basket under 15 user told to order more to increase basket
+    value or told to go to collection.
+    """
     while True:
         if total_value > 15:
             break
@@ -305,14 +311,14 @@ def basket_value_under_15(total_value, col, current_time):
             print("As a result of the extortionate price of fuel.")
             print("We only deliver orders over €15.")
             print("if you want to collect your food instead, enter 'c', ")
-            print("Else enter 'order' to order more food.")
+            print("Else enter 'o' to order more food.\n")
             while True:
                 user_choice = input("Enter: ")
                 user_choice_lower = user_choice.lower()
                 if user_choice_lower == "c":
                     food_for_collection(total_value, current_time)
                     break
-                if user_choice_lower == "order":
+                if user_choice_lower == "o":
                     print(col)
                     col += 1
                     print(col)
@@ -323,6 +329,10 @@ def basket_value_under_15(total_value, col, current_time):
 
 
 def basket_value_0(col, total_value):
+    """
+    This function checks if the users basket is 0
+    If the basket is 0 it redirects user to order food.
+    """
     if total_value == 0:
         print("\nSorry it seems like your basket is empty")
         print("We are redirecting you to our menu's\n")
@@ -330,7 +340,9 @@ def basket_value_0(col, total_value):
 
 
 def menu():
-
+    """
+    This function initiates the program to start and finish.
+    """
     current_time = time()
     col = column_value()
     home_screen()
