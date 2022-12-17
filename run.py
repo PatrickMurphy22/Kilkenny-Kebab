@@ -48,7 +48,7 @@ def menu_selection(col):
     print(options)
 
     while True:
-        menu_choice = input("Enter: ")
+        menu_choice = input("Enter: \n")
         selected_menu = menu_choice.lower()
 
         if selected_menu in ("food", "drinks", "sides"):
@@ -92,7 +92,7 @@ def add_items_to_basket(menu_list, col):
     users_basket = SHEET.worksheet("basket")
     while True:
         try:
-            user_pick = int(input("item number: "))
+            user_pick = int(input("item number: \n"))
             break
         except ValueError:
             print("invalid")
@@ -119,7 +119,7 @@ def view_basket_or_order_more(col, users_basket):
 
     while True:
 
-        choice = input("Enter: ")
+        choice = input("Enter: \n")
         selected_menu = choice.lower()
 
         if selected_menu in ("food", "sides", "drinks"):
@@ -179,7 +179,7 @@ def alter_basket(col, users_basket):
     print("If neither please Enter 'Out' to continue to checkout.\n")
 
     while True:
-        users_choice = input("Enter: ")
+        users_choice = input("Enter: \n")
         if users_choice.lower() == "add":
             print("")
             menu_selection(col)
@@ -203,7 +203,7 @@ def remove_basket_items(col, users_basket):
 
     while True:
         try:
-            remove_item = int(input("Remove item number: "))
+            remove_item = int(input("Remove item number: \n"))
             break
         except ValueError:
             print("invalid")
@@ -280,8 +280,8 @@ def food_for_delivery(total_value):
 
     while True:
 
-        eir_code = input("Eircode: ")
-        confirm_eir_code = input("Confirm Eircode: ")
+        eir_code = input("Eircode: \n")
+        confirm_eir_code = input("Confirm Eircode: \n")
 
         if eir_code == confirm_eir_code:
             print(f"\nYour food will be delivered to Eircode: {eir_code}")
@@ -324,7 +324,7 @@ def basket_value_under_15(total_value, col):
             print("if you want to collect your food instead, enter 'c', ")
             print("Else enter 'o' to order more food.\n")
             while True:
-                user_choice = input("Enter: ")
+                user_choice = input("Enter: \n")
                 user_choice_lower = user_choice.lower()
                 if user_choice_lower == "c":
                     food_for_collection(total_value)
