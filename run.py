@@ -32,6 +32,7 @@ def home_screen():
     screen of Kilkenny Kebab. Then it
     instructes the user on how to progress.
     """
+    SHEET.worksheet("basket").clear()
     print("Welcome to Kilkenny Kebab.")
     print("We were voted Ireland's No.1 Kebab shop in 2022.")
     print("To view our menu's please enter the menu's name below.\n")
@@ -111,7 +112,6 @@ def add_items_to_basket(menu_list, col):
 
 
 def view_basket_or_order_more(col, users_basket):
-
     opt_1 = "To order more items, enter the menu's name."
     opt_2 = "To view your basket and continue enter 'View'."
     print(opt_1)
@@ -120,14 +120,14 @@ def view_basket_or_order_more(col, users_basket):
     while True:
 
         choice = input("Enter: ")
-        user_choice = choice.lower()
+        selected_menu = choice.lower()
 
-        if user_choice in ("food", "sides", "drinks"):
-            display_selected_menu(choice, col)
-            return False
-        if user_choice == "view":
+        if selected_menu in ("food", "sides", "drinks"):
+            display_selected_menu(selected_menu, col)
+            break
+        if selected_menu == "view":
             view_basket(col, users_basket)
-            return False
+            break
 
         print("\nInvalid input")
     return False
@@ -188,6 +188,7 @@ def alter_basket(col, users_basket):
             remove_basket_items(col, users_basket)
             break
         if users_choice.lower() == "out":
+            collection_or_delivery(col)
             break
         print("Invalid input, please enter 'add', 'rem', or 'out'.")
     return False
@@ -211,13 +212,13 @@ def remove_basket_items(col, users_basket):
             users_basket.delete_columns(num)
             print(f"\nRemoving Item No. {remove_item}.")
             print(f"Item Number: {remove_item} has been removed...")
-            users_basket.add_cols(1)
             col -= 1
+            users_basket.add_cols(1)
             view_basket(col, users_basket)
             break
 
 
-def collection_or_delivery(current_time, col):
+def collection_or_delivery(col):
     """
     This function lets the user select wether they would like
     to collect their order or have the food delivered.
@@ -227,44 +228,50 @@ def collection_or_delivery(current_time, col):
     print("\nDo yo want your order for Collection or Delivery?")
     print("Enter D for delivery or C for collection.")
     print("Delivery cost's €3.5 extra.")
-
+    print(total_value)
     while True:
         order_method = input("Enter: ")
         order_method_lower = order_method.lower()
         if order_method_lower == "d":
-            basket_value_under_15(total_value, col, current_time)
+            print(col)
+            basket_value_under_15(total_value, col)
             useless_programer(order_method_lower)
-            food_for_delivery(total_value, current_time)
+            food_for_delivery(total_value)
             break
-        if order_method_lower() == "c":
+        if order_method_lower == "c":
             useless_programer(order_method_lower)
-            food_for_collection(total_value, current_time)
+            food_for_collection(total_value)
             break
         print("Thats an invalid input please enter 'D' or 'C'.")
 
     return False
 
 
-def food_for_collection(total_value, current_time):
+def food_for_collection(total_value):
     """
     Tells user when food will be ready for collection
     and gives total basket value.
     """
+    current_time = time()
     collection_time = current_time + timedelta(minutes=20)
 
     print("Thank you for ordering from us.")
     print(f"Total price: €{total_value} ")
     print("Your food will be ready for collection at approx.")
-    print(f"Estimated Collection Time: {collection_time} ")
+    print(f"Estimated Collection Time: {collection_time} \n")
+    print("Please click on 'Run Program' to order again..")
+    SHEET.worksheet("basket").clear()
+    exit()
 
 
-def food_for_delivery(total_value, current_time):
+def food_for_delivery(total_value):
     """
     This function asks the user for their Eirode twice
     to verify if they entered it correctly, then adds €3.5
     to the total cost of the delivery fee
     and gives estimated time of delivery.
     """
+    current_time = time()
     delivery_time = current_time + timedelta(minutes=40)
     delivery_fee = total_value + 3.50
 
@@ -279,8 +286,10 @@ def food_for_delivery(total_value, current_time):
         if eir_code == confirm_eir_code:
             print(f"\nYour food will be delivered to Eircode: {eir_code}")
             print(f"Total price: €{delivery_fee}\n")
-            print(f"Esitmated Delivery Time: {delivery_time}")
-            break
+            print(f"Esitmated Delivery Time: {delivery_time}\n")
+            print("Please click on 'Run Program' to order again..")
+            SHEET.worksheet("basket").clear()
+            exit()
 
         print("Eircode's didnt match.")
         print("Please try again..\n")
@@ -294,10 +303,10 @@ def useless_programer(order_method_lower):
         print("So we only accept cash payment for delivery's.")
     elif order_method_lower == "c":
         print("So you will have to make the payment in store.")
-    print("Sorry for the inconvenience.")
+    print("Sorry for the inconvenience.\n")
 
 
-def basket_value_under_15(total_value, col, current_time):
+def basket_value_under_15(total_value, col):
     """
     This function compares the users basket to the value 15.
     If basket is over 15 user may proceed to checkout for delivery.
@@ -306,8 +315,10 @@ def basket_value_under_15(total_value, col, current_time):
     """
     while True:
         if total_value > 15:
+            print(total_value)
             break
         if total_value < 15:
+            print(total_value)
             print("As a result of the extortionate price of fuel.")
             print("We only deliver orders over €15.")
             print("if you want to collect your food instead, enter 'c', ")
@@ -316,15 +327,12 @@ def basket_value_under_15(total_value, col, current_time):
                 user_choice = input("Enter: ")
                 user_choice_lower = user_choice.lower()
                 if user_choice_lower == "c":
-                    food_for_collection(total_value, current_time)
+                    food_for_collection(total_value)
                     break
                 if user_choice_lower == "o":
                     print(col)
-                    col += 1
-                    print(col)
                     menu_selection(col)
                     break
-            return collection_or_delivery(current_time, col)
     return False
 
 
@@ -343,12 +351,9 @@ def menu():
     """
     This function initiates the program to start and finish.
     """
-    current_time = time()
     col = column_value()
     home_screen()
     menu_selection(col)
-    collection_or_delivery(current_time, col)
-    SHEET.worksheet("basket").clear()
 
 
 menu()
