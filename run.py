@@ -93,9 +93,11 @@ def add_items_to_basket(menu_list, col):
     while True:
         try:
             user_pick = int(input("item number: \n"))
-            break
+            if user_pick <= 7 and user_pick >= 1:
+                break
+            print("Invalid item number.")
         except ValueError:
-            print("invalid")
+            print("That is not a number. Please try again")
 
     for index, item, price in menu_list:
 
@@ -200,11 +202,12 @@ def remove_basket_items(col, users_basket):
     would like to remove from their basket.
     """
     print("\nPlease enter the item num you want to remove.")
-
     while True:
         try:
             remove_item = int(input("Remove item number: \n"))
-            break
+            if remove_item < col and remove_item >= 1:
+                break
+            print("That is not a number. Please try again")
         except ValueError:
             print("invalid")
     for num in range(col):
@@ -277,6 +280,7 @@ def food_for_delivery(total_value):
 
     print("\nYou are nearly there.")
     print("Please enter your Eircode below")
+    print("PS. Eircodes are Case sensitive")
 
     while True:
 
@@ -297,13 +301,13 @@ def food_for_delivery(total_value):
 
 
 def useless_programer(order_method_lower):
-    print("\nUnfortunately our Web developer is only a rookie.")
-    print("He doesn't know how to implement an online payement system 'yet'.")
+    print("\nUnfortunately our Web developer is only a rookie, and")
+    print("he doesn't know how to implement an online payement system 'yet'.")
     if order_method_lower == "d":
         print("So we only accept cash payment for delivery's.")
     elif order_method_lower == "c":
         print("So you will have to make the payment in store.")
-    print("Sorry for the inconvenience.\n")
+    print("Sorry for the inconvenience.")
 
 
 def basket_value_under_15(total_value, col):
