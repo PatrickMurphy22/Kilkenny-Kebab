@@ -21,19 +21,18 @@ ____
     * [Welcome User & Menu Choice](#welcome-user-&-menu-choice)
     * [Select Items](#select-items)
     * [View Basket](#view-basket)
-        * [Add More Items](#add-more-items)
-        * [Remove Items](#remove-items)
-        * [Checkout](#checkout)
+        1. [Add More Items](#add-more-items)
+        2. [Remove Items](#remove-items)
+        3. [Checkout](#checkout)
     * [Collection or Delivery](#collection-or-delivery)   
-        * [Delivery](#delivery)
-        * [Collection](#collection)
+        1. [Delivery](#delivery)
+        2. [Collection](#collection)
 3. [Technologies](#technologies)
     * [PYTHON](#python)
     * [JAVASCRIPT](#javascript) 
     * [GOOGLE SHEETS](#google-sheets)  
     * [GOOGLE CLOUD](#google-cloud)
 4. [Testing](#testing)
-
 5. [Bugs](#bugs) 
 6. [Credits](#credits)
 7. [Acknowledgement](#acknowledgement)
@@ -41,7 +40,6 @@ ____
 ---
 
 # Flow Chart
-
 
 
 ---
@@ -132,3 +130,11 @@ If the user selects 'C'. They are informed of the approx time the food will be r
 ### Google Cloud
 
 --- 
+
+## Testing 
+
+## Bugs 
+
+## Code 
+
+## Credits
