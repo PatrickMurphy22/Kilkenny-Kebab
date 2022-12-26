@@ -236,7 +236,6 @@ def collection_or_delivery(col):
         order_method = input("Enter: ")
         order_method_lower = order_method.lower()
         if order_method_lower == "d":
-            print(col)
             basket_value_under_15(total_value, col)
             useless_programer(order_method_lower)
             food_for_delivery(total_value)
