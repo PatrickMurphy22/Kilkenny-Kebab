@@ -15,13 +15,20 @@ SHEET = GSPREAD_CLIENT.open("kilkenny_kebab")
 
 
 def time():
-
+    """
+    This function holds the current time to be implemented in other
+    functions.
+    """
     now = datetime.now()
     current_time = now - timedelta(microseconds=now.microsecond)
     return current_time
 
 
 def column_value():
+    """
+    This function contains the column that will be held and passed 
+    through many functions 
+    """
     col = 1
     return col
 
@@ -114,6 +121,10 @@ def add_items_to_basket(menu_list, col):
 
 
 def view_basket_or_order_more(col, users_basket):
+    """
+    This function allows the user to view their current basket.
+    Or lets them add more items to their basket by entering menus name.
+    """
     opt_1 = "To order more items, enter the menu's name."
     opt_2 = "To view your basket and continue enter 'View'."
     print(opt_1)
@@ -300,6 +311,10 @@ def food_for_delivery(total_value):
 
 
 def useless_programer(order_method_lower):
+    """
+    This function outlines to the user that i useless at programming 
+    and cannot code a payment system online.
+    """
     print("\nUnfortunately our Web developer is only a rookie, and")
     print("he doesn't know how to implement an online payement system 'yet'.")
     if order_method_lower == "d":

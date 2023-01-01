@@ -17,7 +17,8 @@ I wanted to keep the process as realistic as possible by adding estimated delive
 ____
 
 1. [Flow Chart](#flow-chart)
-2. [User Experience](#user-experience)
+2. [Google Sheets](#google-sheets)
+3. [User Experience](#user-experience)
     * [Welcome User & Menu Choice](#welcome-user-&-menu-choice)
     * [Select Items](#select-items)
     * [View Basket](#view-basket)
@@ -27,22 +28,32 @@ ____
     * [Collection or Delivery](#collection-or-delivery)   
         1. [Delivery](#delivery)
         2. [Collection](#collection)
-3. [Technologies](#technologies)
+4. [Technologies](#technologies)
     * [PYTHON](#python)
     * [JAVASCRIPT](#javascript) 
     * [GOOGLE SHEETS](#google-sheets)  
     * [GOOGLE CLOUD](#google-cloud)
-4. [Testing](#testing)
-5. [Bugs](#bugs) 
-6. [Credits](#credits)
-7. [Acknowledgement](#acknowledgement)
+5. [Testing](#testing)
+6. [Deployment](#deployment)
+7. [Bugs](#bugs) 
+8. [Further Features](#further-features)
+9. [Credits](#credits)
+10. [Acknowledgement](#acknowledgement)
 
 ---
 
 # Flow Chart
 
+This flow chart outlines my thought proccess and the pathway of the code.
 
+<!-- PICTURE OF FLOWCHART -->
 ---
+
+# Google Sheets
+
+These are the 4 Google sheets I created to help me display menu's and contain users order.
+
+<!-- PICTURE OF GOOGLE SHEETS -->
 
 # User Experience 
 
@@ -119,22 +130,74 @@ If the user selects 'C'. They are informed of the approx time the food will be r
 
 ---
 
-## Technologies
+# Technologies
 
 ### Python 
 
+Program was fully coded using Python coding langugae.
+
+    Python libraires.
+    1. Gspread - Used to import the Gspread sheet
+    2. Datetime - Used tp import current time.
+    3. Google.oauth2.service_account - Used to import Credentials 
+
+
 ### JavaScript
+
+Code Institute terminal was created with JavaScript.
 
 ### Google Sheets
 
+Google sheets was used to store the menu items and the basket items.  
+
 ### Google Cloud
+
+Google cloud was used to enable the APIs needed for this project.
 
 --- 
 
-## Testing 
+# Testing 
 
-## Bugs 
+Testing was conducted by me and several friends and family members. testing provided fruitfull as it outline issues with the project. 
 
-## Code 
 
-## Credits
+# Deployment 
+
+This app was deployed on Heroku. 
+
+# Bugs 
+
+There were several bugs that were identified during the development process. All bugs have been solved with fixes or work arounds using code.
+
+-- Some bugs were --
+
+Bug 1. If user entered number 8 or 0 for item number or basket number the program would close.
+Fix 1. I used (IF OR) statements to keep asking the user what the item No. they want until they enter a valid item number. 
+
+Bug 2. When the user wanted to add more items to the basket after viewing, new items would over-write current items in the basket   
+fix 2. I created a function with columns and continuesly passed this function through relevant functions to maintain what column is currently in use.
+
+Bug 3. The program would enter into the incorrect functions and remain in certain unwanted loops even when the user wished to finish their order. 
+Fix 3. I re-wrote the menu function and to not recall functions, then I entered an exit function to automatically exit code when user finished order.
+
+# Further Features 
+
+I have 2 further features in mind that will be implemented in the future.
+
+1. Add an alter section at the end before user checks out to allow user to alter their order, I.E No onions, gluten free etc..
+2. Add discount options, I.E  if user adds certain cost price of food a discount will automatically apply. Along with mid week deals and weekend deals.   
+
+# Code 
+
+All the code was written by myself. 
+
+The Time function was inpsired by https://www.programiz.com/python-programming/datetime/current-time
+
+
+# Credits
+
+I give credits to 
+
+1. William Nolan who is a software engineer who gave me adivce and helped test the code.
+
+2. Jubril Akolade who is my Code Institute designated mentor. He gave me advice and guided me in the right direction. 
