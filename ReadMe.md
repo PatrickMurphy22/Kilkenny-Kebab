@@ -166,10 +166,15 @@ Google cloud was used to enable the APIs needed for this project.
 
 Testing was conducted by me and several friends and family members. testing provided fruitfull as it outline issues with the project. 
 
+As you can see below there were no issues found in the code with code institutes Python Linter program.
+![Testing Image](assets/readme_images/testing.png)
 
 # Deployment 
 
 This app was deployed on Heroku. 
+
+The app is connected to my GitHub account. 
+I have automatic deploys enabled to push all new Git Pushes from the main branch to the live site. 
 
 # Bugs 
 
