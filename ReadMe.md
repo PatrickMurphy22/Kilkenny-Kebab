@@ -102,7 +102,7 @@ After removing the item The user is shown their new basket and the View Basket s
 
 If the user is happy with their basket and they enter 'Out', they are then taken to the checkout menu.
 
-![Welcome Image](assets/readme_images/add_items_to_basket.png)
+![Checkout options Image](assets/readme_images/add_items_to_basket.png)
 
 ## Collection Or Delivery
 
