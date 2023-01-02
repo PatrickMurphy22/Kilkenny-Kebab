@@ -46,7 +46,8 @@ ____
 
 This flow chart outlines my thought proccess and the pathway of the code.
 
-<!-- PICTURE OF FLOWCHART -->
+![Flow Chart Image](assets/readme_images/Kilkenny_Kebab_Lucidchart.png)
+
 ---
 
 # Google Sheets
@@ -177,12 +178,17 @@ There were several bugs that were identified during the development process. All
 -- Some bugs were --
 
 Bug 1. If user entered number 8 or 0 for item number or basket number the program would close.
+
 Fix 1. I used (IF OR) statements to keep asking the user what the item No. they want until they enter a valid item number. 
 
+
 Bug 2. When the user wanted to add more items to the basket after viewing, new items would over-write current items in the basket   
+
 fix 2. I created a function with columns and continuesly passed this function through relevant functions to maintain what column is currently in use.
 
+
 Bug 3. The program would enter into the incorrect functions and remain in certain unwanted loops even when the user wished to finish their order. 
+
 Fix 3. I re-wrote the menu function and to not recall functions, then I entered an exit function to automatically exit code when user finished order.
 
 # Further Features 
@@ -197,6 +203,8 @@ I have 2 further features in mind that will be implemented in the future.
 All the code was written by myself. 
 
 The Time function was inpsired by https://www.programiz.com/python-programming/datetime/current-time
+
+SCOPE inital constant variables were taken from Code institutes Love sandwhiches project.
 
 
 # Credits

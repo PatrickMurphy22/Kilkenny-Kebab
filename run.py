@@ -26,8 +26,8 @@ def time():
 
 def column_value():
     """
-    This function contains the column that will be held and passed 
-    through many functions 
+    This function contains the column that will be held and passed
+    through many functions
     """
     col = 1
     return col
@@ -312,7 +312,7 @@ def food_for_delivery(total_value):
 
 def useless_programer(order_method_lower):
     """
-    This function outlines to the user that i useless at programming 
+    This function outlines to the user that i useless at programming
     and cannot code a payment system online.
     """
     print("\nUnfortunately our Web developer is only a rookie, and")
