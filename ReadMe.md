@@ -53,7 +53,12 @@ This flow chart outlines my thought proccess and the pathway of the code.
 
 These are the 4 Google sheets I created to help me display menu's and contain users order.
 
-<!-- PICTURE OF GOOGLE SHEETS -->
+![Google Sheet Folders Image](assets/readme_images/GS_folders.png)
+![Google Sheet Food Menu Image](assets/readme_images/GS_food.png)
+![Google Sheet Sides Menu Image](assets/readme_images/GS_sides.png)
+![Google Sheet Drinks Menu Image](assets/readme_images/GS_drinks.png)
+![Google Sheet Basket Image](assets/readme_images/GS_basket.png)
+
 
 # User Experience 
 
@@ -64,7 +69,7 @@ I executed this by making the ordering process simple and straightforward.
 
 The first thing the user see's is a welcoming text and immeditately tells the users to enter the menu name they wish to view.
 
-<!-- PHOTO OF WELCOME SCREEN -->
+![Welcome Image](assets/readme_images/welcome.png)
 
 ## Select Items 
 
@@ -74,7 +79,7 @@ either the menu name of the menu they wish to order more items for or to view th
 
 If the users input is invalid they are promted to enter a valid item number
 
-<!-- PHOTO OF SELECT ITEMS -->
+![Menu Image](assets/readme_images/menu_options.png)
 
 ## View Basket
 
@@ -97,7 +102,7 @@ After removing the item The user is shown their new basket and the View Basket s
 
 If the user is happy with their basket and they enter 'Out', they are then taken to the checkout menu.
 
-<!-- PHOTO OF VIEW BASKET ITEMS-->
+![Welcome Image](assets/readme_images/add_items_to_basket.png)
 
 ## Collection Or Delivery
 
@@ -113,20 +118,20 @@ If the user selects 'D', 2 possible outcomes can occur.
 Outcome 1: If the users basket is over the value of €15 the user continues to the next step which involves them entering their EirCode.
            After the user confirms their EirCode they are then given an estimated time based off the time they placed their order.
 
-<!-- PHOTO OF Delivery-->
+![Delivery Image](assets/readme_images/Delivery.png)
 
 Outcome 2: If the users basket is under the value of €15 the user is informed that Kilkenny Kebab don't do deliverys for under €15. 
            The user is then asked if they want to order more items to bring their basket value up, if the user enters 'O' They are 
            brought back to Menu Choice. Else if the user enter 'C' they get diverted to  food collection option.
 
-<!-- PHOTO OF invalid basket value-->
+![Invalid Basket Value Image](assets/readme_images/basket_value_under_15.png)
 
 ### Collection 
 
 If the user selects 'C'. They are informed of the approx time the food will be ready to be collected. 
 
 
-<!-- PHOTO OF collection-->
+![Collection Image](assets/readme_images/collection.png)
 
 ---
 
